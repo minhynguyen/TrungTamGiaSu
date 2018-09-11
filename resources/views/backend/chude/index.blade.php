@@ -12,6 +12,10 @@
       </h1>
 @endsection
 
+@section('css')
+
+    <link rel="stylesheet" href=" {{ asset('Theme/admin/dist/css/skins/skin-green.css') }}">
+@endsection
 
 <!-- noi dung can thay doi o giua -->
 @section('content')
@@ -52,9 +56,26 @@
                 
               </table>
             </div>
+
             <!-- /.box-body -->
           </div>
 
+@endsection
+
+@section('script')
+<script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+</script>
 @endsection
 
 
