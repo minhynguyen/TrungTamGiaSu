@@ -25,3 +25,7 @@ Route::get('/test', function () {
     return view('backend/chude/index');
 });
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
