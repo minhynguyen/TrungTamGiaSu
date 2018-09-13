@@ -1,12 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Mon;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
+use App\Mon;
+use View;
+use Validator;
+use Response;
 
 class MonController extends Controller
 {
+    protected $rules =
+    [
+        'title' => 'required|min:2|max:32',
+        'content' => 'required|min:2|max:128'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,9 @@ class MonController extends Controller
      */
     public function index()
     {
-        //
+        $mon = Mon::all();
+
+        return view('backend.mon.index', ['mon' => $mon]);
     }
 
     /**
@@ -35,7 +45,17 @@ class MonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make(Input::all(), $this->rules);
+        if ($validator->fails()) {
+            return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+        } else {
+            $mon = new Mon();
+            $mon->m_ten = $request->m_ten;
+            $mon->m_trangthai = $request->m_trangthai;
+            
+            $mon->save();
+            return response()->json($mon);
+        }
     }
 
     /**
@@ -44,9 +64,11 @@ class MonController extends Controller
      * @param  \App\Mon  $mon
      * @return \Illuminate\Http\Response
      */
-    public function show(Mon $mon)
+    public function show($id)
     {
-        //
+        $mon = mon::findOrFail($id);
+
+        return view('mon.show', ['mon' => $mon]);
     }
 
     /**
@@ -67,9 +89,18 @@ class MonController extends Controller
      * @param  \App\Mon  $mon
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Mon $mon)
+    public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make(Input::all(), $this->rules);
+        if ($validator->fails()) {
+            return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+        } else {
+            $mon = Mon::findOrFail($id);
+            $mon->m_ten = $request->m_ten;
+            $mon->m_trangthai = $request->m_trangthai;
+            $mon->save();
+            return response()->json($mon);
+        }
     }
 
     /**
@@ -80,6 +111,17 @@ class MonController extends Controller
      */
     public function destroy(Mon $mon)
     {
-        //
+        $mon = Mon::findOrFail($id);
+        $mon->delete();
+
+        return response()->json($mon);
     }
+
+
+    public function changeStatus() 
+    {
+        
+    }
+
+
 }

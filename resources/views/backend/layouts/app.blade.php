@@ -22,7 +22,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="{{ asset ('theme/admin/dist/css/skins/skin-purple-light.min.css') }}">
 
-  <link rel="stylesheet" href="{{ asset ('theme/admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css ') }}">
 
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -254,14 +253,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 3 -->
-<script src=" {{ asset ('theme/admin/bower_components/jquery/dist/jquery.min.js') }}"></script>
+<script src=" {{ asset ('theme/admin/bootstrapwer_components/jquery/dist/jquery.min.js') }}"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src=" {{ asset ('theme/admin/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src=" {{ asset ('theme/admin/dist/js/adminlte.min.js') }}"></script>
 
-<script src="{{ asset ('theme/admin/bower_components/datatables.net/js/jquery.dataTables.min.js ') }}"></script>
-<script src="{{ asset ('theme/admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+
+
+
 
 @yield ('script')
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

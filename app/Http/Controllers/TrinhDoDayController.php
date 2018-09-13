@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\TrinhDoDay;
 use Illuminate\Http\Request;
-
+use Auth;
+use Carbon\Carbon;
+use DB;
+use Yajra\Datatables\Datatables;
 class TrinhDoDayController extends Controller
 {
     /**
@@ -14,8 +17,45 @@ class TrinhDoDayController extends Controller
      */
     public function index()
     {
-        //
+        return view('backend.TrinhDo.index');
     }
+
+    public function getAddEditRemoveColumnData1()
+    {
+        $TrinhDoDay = TrinhDoDay::select(['tdd_ma', 'tdd_ten', 'tdd_trangthai', 'tdd_taomoi', 'tdd_capnhat']);
+
+        return Datatables::of($TrinhDoDay)
+            ->addColumn('action', function ($TrinhDoDay) {
+                return '<button type="button" class="btn btn-warning"><a class="table-action-btn" title="Chỉnh sửa" href="' . route('TrinhDo.edit', $TrinhDoDay->tdd_ma) . '"><i class="fa fa-pencil"></i></a></button>
+
+                    <button type="button" class="btn btn-danger"><a class="table-action-btn" title="Xóa" href="' . route('TrinhDo.delete', $TrinhDoDay->tdd_ma) . '"><i class="fa fa-trash"></i></a></button>';
+
+            })
+            // ->edit_column('lbd_trangthai', '@if ($lbd_trangthai ==="1") <span class="badge bg-yellow">KHÓA</span> @endif')\
+            ->editColumn('tdd_trangthai', '@if ($tdd_trangthai =="2")Khả Dụng @else Khóa  @endif')
+            ->make(true);
+    }
+
+
+    public function getAddEditRemoveColumnData()
+    {
+        $TrinhDoDay = TrinhDoDay::select(['tdd_ma', 'tdd_ten', 'tdd_trangthai', 'tdd_taomoi', 'tdd_capnhat']);
+
+        return Datatables::of($TrinhDoDay)
+            ->addColumn('action', function ($TrinhDoDay) {
+                return ' <button class="edit-modal btn btn-info" data-id="'.$TrinhDoDay->tdd_ma.'"
+                            data-name="'.$TrinhDoDay->tdd_ten.'">
+                            <span class="glyphicon glyphicon-edit"></span> Edit
+                        </button>
+                    <button type="button" class="btn btn-danger"><a class="table-action-btn" title="Xóa" href="' . route('TrinhDo.delete', $TrinhDoDay->tdd_ma) . '"><i class="fa fa-trash"></i></a></button>';
+
+            })
+            // ->edit_column('lbd_trangthai', '@if ($lbd_trangthai ==="1") <span class="badge bg-yellow">KHÓA</span> @endif')\
+            ->editColumn('tdd_trangthai', '@if ($tdd_trangthai =="2")Khả Dụng @else Khóa  @endif')
+            ->make(true);
+    }
+
+   
 
     /**
      * Show the form for creating a new resource.
@@ -24,7 +64,7 @@ class TrinhDoDayController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.TrinhDo.create');
     }
 
     /**
@@ -35,7 +75,22 @@ class TrinhDoDayController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+        $TrinhDoDay = new TrinhDoDay();
+        $TrinhDoDay->tdd_ma = $request->tdd_ma;
+        $TrinhDoDay->tdd_ten = $request->tdd_ten;
+        $TrinhDoDay->tdd_taomoi = Carbon::now();;
+        $TrinhDoDay->tdd_capnhat = Carbon::now();;
+        $TrinhDoDay->tdd_trangthai = $request->tdd_trangthai;
+        
+        $TrinhDoDay->save();
+
+        return redirect(route('TrinhDo.index')); //trả về trang cần hiển thị
+        }
+        catch(QueryException $ex){
+            return reponse([
+                'error' => true, 'message' => $ex->getMessage()], 500);
+        }
     }
 
     /**
@@ -44,7 +99,7 @@ class TrinhDoDayController extends Controller
      * @param  \App\TrinhDoDay  $trinhDoDay
      * @return \Illuminate\Http\Response
      */
-    public function show(TrinhDoDay $trinhDoDay)
+    public function show($id)
     {
         //
     }
@@ -55,9 +110,10 @@ class TrinhDoDayController extends Controller
      * @param  \App\TrinhDoDay  $trinhDoDay
      * @return \Illuminate\Http\Response
      */
-    public function edit(TrinhDoDay $trinhDoDay)
+    public function edit($id)
     {
-        //
+        $TrinhDo = TrinhDoDay::find($id);
+        return view('backend.TrinhDo.edit')->with('TrinhDo', $TrinhDo);
     }
 
     /**
@@ -67,9 +123,22 @@ class TrinhDoDayController extends Controller
      * @param  \App\TrinhDoDay  $trinhDoDay
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TrinhDoDay $trinhDoDay)
+    public function update(Request $request, $id)
     {
-        //
+        try{
+        $TrinhDoDay = TrinhDoDay::find($id);
+        $TrinhDoDay->tdd_ma = $request->tdd_ma;
+        $TrinhDoDay->tdd_ten = $request->tdd_ten;
+        $TrinhDoDay->tdd_taomoi = Carbon::now();;
+        $TrinhDoDay->tdd_capnhat = Carbon::now();;
+        $TrinhDoDay->tdd_trangthai = $request->tdd_trangthai;
+
+        return redirect(route('TrinhDo.index')); //trả về trang cần hiển thị
+        }
+        catch(QueryException $ex){
+            return reponse([
+                'error' => true, 'message' => $ex->getMessage()], 500);
+        }
     }
 
     /**
@@ -78,8 +147,11 @@ class TrinhDoDayController extends Controller
      * @param  \App\TrinhDoDay  $trinhDoDay
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TrinhDoDay $trinhDoDay)
+    
+    public function destroy($id)
     {
-        //
+        $TrinhDoDay = TrinhDoDay::find($id);
+        $TrinhDoDay->delete();
+        return redirect(route('TrinhDo.index'));
     }
 }
