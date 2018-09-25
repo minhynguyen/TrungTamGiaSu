@@ -40,5 +40,10 @@ Route::group(['prefix'=>'admin'], function(){
 Route::get('/TrinhDo', 'TrinhDoDayController@getAddEditRemoveColumnData')->name('TrinhDo1');
 
 
+
+
 Route::resource('Mon','MonController');
-Route::post('Mon/changeStatus', array('as' => 'changeStatus', 'mon' => 'MonController@changeStatus'));
+// Route::post('Mon/changeStatus', array('as' => 'changeStatus', 'mon' => 'MonController@changeStatus'));
+
+
+Route::resource('LinhVuc','LinhVucController');

@@ -253,12 +253,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 3 -->
-<script src=" {{ asset ('theme/admin/bootstrapwer_components/jquery/dist/jquery.min.js') }}"></script>
+<!-- <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script> -->
+<!-- jQuery 3 -->
+<script src="{{ asset ('theme/admin/bower_components/jquery/dist/jquery.min.js') }}"></script>
+
+<!-- <script src=" {{ asset ('theme/admin/bootstrapwer_components/jquery/dist/jquery.min.js') }}"></script> -->
 <!-- Bootstrap 3.3.7 -->
 <script src=" {{ asset ('theme/admin/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src=" {{ asset ('theme/admin/dist/js/adminlte.min.js') }}"></script>
-
 
 
 
