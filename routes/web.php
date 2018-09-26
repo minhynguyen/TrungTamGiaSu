@@ -33,17 +33,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix'=>'admin'], function(){	
 		Route::resource('TrinhDo', 'TrinhDoDayController');
-		Route::get('/TrinhDo/delete/{id}', ['as'=>'TrinhDo.delete', 'uses'=>'TrinhDoDayController@destroy']);
+		
 
 });
-// Route::post('editItem', 'TrinhDoDayController@update');
-Route::get('/TrinhDo', 'TrinhDoDayController@getAddEditRemoveColumnData')->name('TrinhDo1');
 
 
 
 
 Route::resource('Mon','MonController');
-// Route::post('Mon/changeStatus', array('as' => 'changeStatus', 'mon' => 'MonController@changeStatus'));
 
 
 Route::resource('LinhVuc','LinhVucController');

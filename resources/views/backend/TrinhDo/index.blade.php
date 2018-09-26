@@ -1,288 +1,296 @@
 @extends('backend.layouts.app')   
 
 @section('title')
-  Danh Sách Trình Độ Giảng Dạy
-@endsection
-
-
-@section('page-header')
-      <h1>
-        Danh Sách Trình Độ Giảng Dạy
-        <small>Gia Sư</small>
-      </h1>
+  Danh Sách Các Trình Độ Giảng Dạy
 @endsection
 
 @section('css')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{ asset ('theme/admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"> -->
+  <link rel="stylesheet" href="{{ asset ('css/toastr.css') }}">
+
+  <style type="text/css">
+    .modal-header{
+      background-color: #ffd22d;
+    } 
+  </style>
 @endsection
 
-<!-- noi dung can thay doi o giua -->
+@section('page-header')
+      <h1>
+        Danh Sách Các Trình Độ Giảng Dạy
+        <small>Danh Sách Các Trình Độ Giảng Dạy</small>
+      </h1>
+@endsection
 @section('content')
+
+@if($errors->any())
+      @foreach($errors->all() as $error)
+      
+      <script type="text/javascript">
+         setTimeout(function () {
+          toastr.options = {
+              "closeButton": true,
+              "debug": false,
+              "newestOnTop": true,
+              "progressBar": true,
+              "positionClass": "toast-top-center",
+              "preventDuplicates": true,
+              "onclick": null,
+              "hideDuration": "1000"
+            }
+            toastr.warning( '{{$error}}', 'Successfully!!!', {timeOut: 50000});
+        }, 500);
+    </script>
+      @endforeach
+@endif
+
+@if(Session::has('success'))
+<script type="text/javascript">
+     setTimeout(function () {
+      toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": true,
+          "progressBar": true,
+          "positionClass": "toast-top-center",
+          "preventDuplicates": true,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "100",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }
+        toastr.success('Thêm Thành Công', 'Successfully!!!', {timeOut: 5000});
+    }, 500);
+</script>
+@endif
+@if(Session::has('deletesuccess'))
+<script type="text/javascript">
+     setTimeout(function () {
+      toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": true,
+          "progressBar": true,
+          "positionClass": "toast-top-center",
+          "preventDuplicates": true,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "100",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }
+        toastr.success('Xóa Thành Công', 'Successfully!!!', {timeOut: 800});
+    }, 500);
+</script>
+@endif
 <div class="box">
-  <div class="box-header">
-    <h3 class="box-title">Danh Sách Trình Độ Giảng Dạy</h3>
-    
-    
-    <div class="box-tools">
-      <button type="button" class="btn btn-sm pull-right" style="margin-left: 2px"> <a href=""><i class="fa fa-file-pdf-o"></i> In PDF </a></button> 
-
-      <button type="button" class="btn btn-sm pull-right"> <a href=""><i class="fa fa-file-excel-o"></i> In Excel </a></button> 
-      <div class="input-group input-group-sm" style="width: 150px;">
-        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-        <div class="input-group-btn">
-          <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-  <!-- /.box-header -->
-  <!-- <div class="box-body table-responsive no-padding">
-    <table id="tbTrinhDo1" class="table table-hover text-center" >
-      <tr>
-        <th>STT</th>
-        <th style="text-align: left">Tên Trình Độ</th>
-        <th>Ngày Tạo Mới</th>
-        <th>Ngày Cập Nhật</th>
-        <th>Trạng Thái</th>
-        
-
-
-      </tr>
-      
-      
-      
-    </table>
-  </div> -->
-  
-{{ csrf_field() }}
-  <div class="box-body table-responsive no-padding">
-              <table class="" id="tbTrinhDo">
-                
+            <div class="box-header">
+              <h3 class="box-title">Danh Sách Các Trình Độ Giảng Dạy</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover text-center " id="myTable">
                 <thead>
-            <tr>
-                <th>Mã Loại</th>
-                <th>Tên Loại</th>
-                <th>Trạng Thái</th>
-                <th>Tạo Mới</th>
-                <th>Cập Nhật</th>
-                 <th><a class="btn btn-primary" data-toggle="modal" href='#modal-create'>Create</a></th>
+                <tr>
+                  <th>STT</th>
+                  <th style="text-align: left">Tên</th>
+                  <th>Ngày Tạo Mới</th>
+                  <th>Ngày Cập Nhật</th>
+                  <th>Trạng Thái</th>
+                  <th >
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                       <i class="fa fa-plus"></i> Thêm Trình Độ
+                    </button>
+                  </th>
+                </tr>
+                </thead>
                 
-            </tr>
-              </thead>
+                <tbody>
+                    
+                @foreach ($dsTrinhDo as $td)
+                <tr>
+                    <td>{{ $loop->index + 1}}</td>
+                    <td style="text-align: left;">{{$td->tdd_ten}}</td>
+                    <td>{{$td->tdd_taomoi}}</td>
+                    <td>{{$td->tdd_capnhat}}</td>
+                    @if ($td->tdd_trangthai === 1)
+
+                    <td style="text-align: center;"><span class="badge bg-yellow">Khóa</span></td>
+                    @else
+                    <td style="text-align: center;"><span class="badge bg-green">Khả Dụng</span></td>
+                    @endif
+                    
+                    <td>
+                        <button class="btn btn-info" data-mytitle="{{$td->tdd_ten}}" data-mydescription="{{$td->tdd_trangthai}}" data-catid={{$td->tdd_ma}} data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i> Edit</button>
+                        
+                        <button class="btn btn-danger" data-catid={{$td->tdd_ma}} data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> Delete</button>
+                    </td>
+                </tr>
+                @endforeach
+                </tbody>
+
+                
+                
               </table>
             </div>
-
-<!-- modalCreate -->
-  <div class="modal fade" id="modal-create">
-    <div class="modal-dialog">
-      <form name="frmTrinhDo" method="POST" action="{{ route('TrinhDo.store') }}" enctype="multipart/form-data">
-        {{ csrf_field() }}    
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Modal title</h4>
+            <!-- /.box-body -->
           </div>
-          <div class="modal-body">
 
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Nhập Tên Trình Độ</label>
-                <input type="text" class="form-control" id="tdd_ten" name="tdd_ten" placeholder="Nhập Tên Trình Độ">
-              </div>
-            
-              <div class="form-group">
+
+
+          <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Thêm Trình Độ</h4>
+      </div>
+      <form action="{{route('TrinhDo.store')}}" method="post">
+            {{csrf_field()}}
+          <div class="modal-body">
+                <div class="form-group">
+                    <label for="title">Tên Trình Độ</label>
+                    <input type="text" class="form-control" name="tdd_ten" id="tdd_ten">
+                </div>
+
+                <div class="form-group">
                 <label>Trạng Thái</label>
                 <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" name="tdd_trangthai", id="tdd_trangthai">
+                  <!-- <select > -->
                     <option value="1">Khóa</option>
                     <option value="2">Khả dụng</option>
+                  <!-- </select> -->
                 </select>
-              </div>
-            </div>
+                </div>
+
           </div>
-        <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-info" >Save</button>
-        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-primary">Lưu</button>
+          </div>
       </form>
     </div>
   </div>
-
-  <!-- /.box-body -->
 </div>
 
-
-
-<div id="myModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title"></h4>
-          </div>
+<!-- Modal -->
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Cập Nhật Trình Độ</h4>
+      </div>
+      <form action="{{route('TrinhDo.update','test')}}" method="post">
+            {{method_field('patch')}}
+            {{csrf_field()}}
           <div class="modal-body">
-            <form class="form-horizontal" role="form">
-              <div class="form-group">
-                <label class="control-label col-sm-2" for="id">ID:</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="fid" disabled>
+            <input type="hidden" name="tdd_ma" id="tdd_ma" value="">
+                <div class="form-group">
+                    <label for="title">Tên Trình Độ</label>
+                    <input type="text" class="form-control" name="tdd_ten" id="tdd_ten">
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-sm-2" for="name">Name:</label>
-                <div class="col-sm-10">
-                  <input type="name" class="form-control" id="n">
+
+                <div class="form-group">
+                <label>Trạng Thái</label>
+                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" name="tdd_trangthai", id="tdd_trangthai">
+                  <!-- <select > -->
+                    <option value="1">Khóa</option>
+                    <option value="2">Khả dụng</option>
+                  <!-- </select> -->
+                </select>
                 </div>
-              </div>
-            </form>
-            <div class="deleteContent">
-              Are you Sure you want to delete <span class="dname"></span> ? <span
-                class="hidden did"></span>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn actionBtn" data-dismiss="modal">
-                <span id="footer_action_button" class='glyphicon'> </span>
-              </button>
-              <button type="button" class="btn btn-warning" data-dismiss="modal">
-                <span class='glyphicon glyphicon-remove'></span> Close
-              </button>
-            </div>
+
           </div>
-        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-primary">Cập Nhật</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal modal-danger fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center" id="myModalLabel">Xác Nhận Xóa</h4>
       </div>
-      </div>
+      <form action="{{route('TrinhDo.destroy','test')}}" method="post">
+            {{method_field('delete')}}
+            {{csrf_field()}}
+          <div class="modal-body">
+            <input type="hidden" name="tdd_ma" id="tdd_ma" value="">
+                <p class="text-center">
+                    Bạn Có Chắc Chắn Xóa?
+                </p>
+                <input type="hidden" name="tdd_ma" id="tdd_ma" value="">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">Không</button>
+            <button type="submit" class="btn btn-warning">Có</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 @endsection
 
 @section('script')
-
-
-<!-- <script src="//code.jquery.com/jquery.js"></script> -->
-<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="{{ asset ('theme/admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script>
-$(function() {
-    $('#tbTrinhDo').DataTable({
-        processing: true,
-        serverSide: true,
-        "language": {
-          "lengthMenu": "Hiển thị _MENU_ dòng dữ liệu trên một trang",
-           "info":" Hiển thị _START_ trong tổng số _TOTAL_ dòng dữ liệu",
-           "infoEmpty":"Dữ liệu rỗng",
-           "emptyTable":"Chưa có dữ liệu nào",
-           "processing":"Đang Xử Lý...", 
-           "search":"Tìm Kiếm",
-           "loadingRecords":"Đang load dữ liệu",
-          "zeroRecords":"Không Tìm Thấy Dữ Liệu",
-          "infoFiltered":"(Lọc Trong _MAX_ Dòng Dữ Liệu)",
-        },
-        ajax: '{!! route('TrinhDo1') !!}',
-        columns: [
-            { data: 'tdd_ma', name: 'tdd_ma' },
-            { data: 'tdd_ten', name: 'tdd_ten' },
-            { data: 'tdd_trangthai', name: 'tdd_trangthai' },
-            { data: 'tdd_taomoi', name: 'tdd_taomoi' },
-            { data: 'tdd_capnhat', name: 'tdd_capnhat' },
-            {data: 'action', name: 'action', orderable: false, searchable: false}
-        ]
-    });
-});
+
+    $(document).ready( function () {
+    // $('#myTable').DataTable();
+    $('#myTable').DataTable();
+} );
+  
+   $('#edit').on('show.bs.modal', function (event) {
+
+      var button = $(event.relatedTarget) 
+      var tdd_ten = button.data('mytitle') 
+      var tdd_trangthai = button.data('mydescription') 
+      var tdd_ma = button.data('catid') 
+      var modal = $(this)
+
+      modal.find('.modal-body #tdd_ten').val(tdd_ten);
+      modal.find('.modal-body #tdd_trangthai').val(tdd_trangthai);
+      modal.find('.modal-body #tdd_ma').val(tdd_ma);
+})
 
 
+  $('#delete').on('show.bs.modal', function (event) {
 
-$(document).ready(function() {
-  $(document).on('click', '.edit-modal', function() {
-        $('#footer_action_button').text("Update");
-        $('#footer_action_button').addClass('glyphicon-check');
-        $('#footer_action_button').removeClass('glyphicon-trash');
-        $('.actionBtn').addClass('btn-success');
-        $('.actionBtn').removeClass('btn-danger');
-        $('.actionBtn').addClass('edit');
-        $('.modal-title').text('Edit');
-        $('.deleteContent').hide();
-        $('.form-horizontal').show();
-        $('#fid').val($(this).data('id'));
-        $('#n').val($(this).data('name'));
-        $('#myModal').modal('show');
-    });
-    $(document).on('click', '.delete-modal', function() {
-        $('#footer_action_button').text(" Delete");
-        $('#footer_action_button').removeClass('glyphicon-check');
-        $('#footer_action_button').addClass('glyphicon-trash');
-        $('.actionBtn').removeClass('btn-success');
-        $('.actionBtn').addClass('btn-danger');
-        $('.actionBtn').addClass('delete');
-        $('.modal-title').text('Delete');
-        $('.did').text($(this).data('id'));
-        $('.deleteContent').show();
-        $('.form-horizontal').hide();
-        $('.dname').html($(this).data('name'));
-        $('#myModal').modal('show');
-    });
+      var button = $(event.relatedTarget) 
 
-    $('.modal-footer').on('click', '.edit', function() {
+      var tdd_ma = button.data('catid') 
+      var modal = $(this)
 
-        $.ajax({
-            type: 'post',
-            url: '/editItem',
-            data: {
-                '_token': $('input[name=_token]').val(),
-                'id': $("#fid").val(),
-                'name': $('#n').val()
-            },
-            success: function(data) {
-                $('.item' + data.id).replaceWith("<tr class='item" + data.id + "'><td>" + data.id + "</td><td>" + data.name + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'><span class='glyphicon glyphicon-edit'></span> Edit</button> <button class='delete-modal btn btn-danger' data-id='" + data.id + "' data-name='" + data.name + "' ><span class='glyphicon glyphicon-trash'></span> Delete</button></td></tr>");
-            }
-        });
-    });
-    $("#add").click(function() {
-
-        $.ajax({
-            type: 'post',
-            url: '/addItem',
-            data: {
-                '_token': $('input[name=_token]').val(),
-                'name': $('input[name=name]').val()
-            },
-            success: function(data) {
-                if ((data.errors)){
-                  $('.error').removeClass('hidden');
-                    $('.error').text(data.errors.name);
-                }
-                else {
-                    $('.error').addClass('hidden');
-                    $('#table').append("<tr class='item" + data.id + "'><td>" + data.id + "</td><td>" + data.name + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'><span class='glyphicon glyphicon-edit'></span> Edit</button> <button class='delete-modal btn btn-danger' data-id='" + data.id + "' data-name='" + data.name + "'><span class='glyphicon glyphicon-trash'></span> Delete</button></td></tr>");
-                }
-            },
-
-        });
-        $('#name').val('');
-    });
-    $('.modal-footer').on('click', '.delete', function() {
-        $.ajax({
-            type: 'post',
-            url: '/deleteItem',
-            data: {
-                '_token': $('input[name=_token]').val(),
-                'id': $('.did').text()
-            },
-            success: function(data) {
-                $('.item' + $('.did').text()).remove();
-            }
-        });
-    });
-});
+      modal.find('.modal-body #tdd_ma').val(tdd_ma);
+})
 
 
-</script> 
+</script>
 @endsection
-
-
-
 
 
 

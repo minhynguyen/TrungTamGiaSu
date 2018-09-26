@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 use Auth;
 use Carbon\Carbon;
 use DB;
-use Yajra\Datatables\Datatables;
+use RealRashid\SweetAlert\Facades\Alert;
+use App\Components\FlashMessages;
+use Session;
 class TrinhDoDayController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -17,45 +20,9 @@ class TrinhDoDayController extends Controller
      */
     public function index()
     {
-        return view('backend.TrinhDo.index');
+        $dsTrinhDo = TrinhDoDay::all();
+        return view('backend.TrinhDo.index')->with('dsTrinhDo',$dsTrinhDo);
     }
-
-    public function getAddEditRemoveColumnData1()
-    {
-        $TrinhDoDay = TrinhDoDay::select(['tdd_ma', 'tdd_ten', 'tdd_trangthai', 'tdd_taomoi', 'tdd_capnhat']);
-
-        return Datatables::of($TrinhDoDay)
-            ->addColumn('action', function ($TrinhDoDay) {
-                return '<button type="button" class="btn btn-warning"><a class="table-action-btn" title="Chỉnh sửa" href="' . route('TrinhDo.edit', $TrinhDoDay->tdd_ma) . '"><i class="fa fa-pencil"></i></a></button>
-
-                    <button type="button" class="btn btn-danger"><a class="table-action-btn" title="Xóa" href="' . route('TrinhDo.delete', $TrinhDoDay->tdd_ma) . '"><i class="fa fa-trash"></i></a></button>';
-
-            })
-            // ->edit_column('lbd_trangthai', '@if ($lbd_trangthai ==="1") <span class="badge bg-yellow">KHÓA</span> @endif')\
-            ->editColumn('tdd_trangthai', '@if ($tdd_trangthai =="2")Khả Dụng @else Khóa  @endif')
-            ->make(true);
-    }
-
-
-    public function getAddEditRemoveColumnData()
-    {
-        $TrinhDoDay = TrinhDoDay::select(['tdd_ma', 'tdd_ten', 'tdd_trangthai', 'tdd_taomoi', 'tdd_capnhat']);
-
-        return Datatables::of($TrinhDoDay)
-            ->addColumn('action', function ($TrinhDoDay) {
-                return ' <button class="edit-modal btn btn-info" data-id="'.$TrinhDoDay->tdd_ma.'"
-                            data-name="'.$TrinhDoDay->tdd_ten.'">
-                            <span class="glyphicon glyphicon-edit"></span> Edit
-                        </button>
-                    <button type="button" class="btn btn-danger"><a class="table-action-btn" title="Xóa" href="' . route('TrinhDo.delete', $TrinhDoDay->tdd_ma) . '"><i class="fa fa-trash"></i></a></button>';
-
-            })
-            // ->edit_column('lbd_trangthai', '@if ($lbd_trangthai ==="1") <span class="badge bg-yellow">KHÓA</span> @endif')\
-            ->editColumn('tdd_trangthai', '@if ($tdd_trangthai =="2")Khả Dụng @else Khóa  @endif')
-            ->make(true);
-    }
-
-   
 
     /**
      * Show the form for creating a new resource.
@@ -64,7 +31,7 @@ class TrinhDoDayController extends Controller
      */
     public function create()
     {
-        return view('backend.TrinhDo.create');
+        
     }
 
     /**
@@ -75,17 +42,21 @@ class TrinhDoDayController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+        'tdd_ten' => 'required|max:100',
+        'tdd_trangthai' => 'required',
+        ]);
         try{
         $TrinhDoDay = new TrinhDoDay();
         $TrinhDoDay->tdd_ma = $request->tdd_ma;
         $TrinhDoDay->tdd_ten = $request->tdd_ten;
-        $TrinhDoDay->tdd_taomoi = Carbon::now();;
-        $TrinhDoDay->tdd_capnhat = Carbon::now();;
+        $TrinhDoDay->tdd_taomoi = Carbon::now();
+        $TrinhDoDay->tdd_capnhat = Carbon::now();
         $TrinhDoDay->tdd_trangthai = $request->tdd_trangthai;
         
         $TrinhDoDay->save();
-
-        return redirect(route('TrinhDo.index')); //trả về trang cần hiển thị
+        Session::flash('success', 'This is a message!'); 
+        return back();
         }
         catch(QueryException $ex){
             return reponse([
@@ -96,44 +67,43 @@ class TrinhDoDayController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\TrinhDoDay  $trinhDoDay
+     * @param  \App\Mon  $mon
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\TrinhDoDay  $trinhDoDay
+     * @param  \App\Mon  $mon
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Mon $mon)
     {
-        $TrinhDo = TrinhDoDay::find($id);
-        return view('backend.TrinhDo.edit')->with('TrinhDo', $TrinhDo);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\TrinhDoDay  $trinhDoDay
+     * @param  \App\Mon  $mon
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         try{
-        $TrinhDoDay = TrinhDoDay::find($id);
+
+        $TrinhDoDay = TrinhDoDay::findOrFail($request->tdd_ma);
         $TrinhDoDay->tdd_ma = $request->tdd_ma;
         $TrinhDoDay->tdd_ten = $request->tdd_ten;
-        $TrinhDoDay->tdd_taomoi = Carbon::now();;
-        $TrinhDoDay->tdd_capnhat = Carbon::now();;
+        $TrinhDoDay->tdd_capnhat = Carbon::now();
         $TrinhDoDay->tdd_trangthai = $request->tdd_trangthai;
-
-        return redirect(route('TrinhDo.index')); //trả về trang cần hiển thị
+        $TrinhDoDay->save();
+        return back();
         }
         catch(QueryException $ex){
             return reponse([
@@ -144,14 +114,14 @@ class TrinhDoDayController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\TrinhDoDay  $trinhDoDay
+     * @param  \App\Mon  $mon
      * @return \Illuminate\Http\Response
      */
-    
-    public function destroy($id)
+    public function destroy(Request $Request)
     {
-        $TrinhDoDay = TrinhDoDay::find($id);
+        $TrinhDoDay = TrinhDoDay::findOrFail($Request->tdd_ma);
         $TrinhDoDay->delete();
-        return redirect(route('TrinhDo.index'));
+        Session::flash('deletesuccess', 'This is a message!');
+        return back();
     }
 }

@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')   
 
 @section('title')
-  Danh Sách Các Lĩnh Vực
+  Danh Sách Các Môn Học
 @endsection
 
 @section('css')
@@ -11,8 +11,8 @@
 
 @section('page-header')
       <h1>
-        Danh Sách Các Lĩnh Vực
-        <small>Lĩnh Vực Của Gia Sư</small>
+        Danh Sách Các Môn Học
+        <small>Danh Sách Các Môn Học</small>
       </h1>
 @endsection
 @section('content')
@@ -32,7 +32,7 @@
                   <th>Trạng Thái</th>
                   <th >
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                        Thêm Lĩnh Vực
+                       <i class="fa fa-plus"></i> Thêm Môn Học
                     </button>
                   </th>
                 </tr>
@@ -54,9 +54,9 @@
                     @endif
                     
                     <td>
-                        <button class="btn btn-info" data-mytitle="{{$m->m_ten}}" data-mydescription="{{$m->m_trangthai}}" data-catid={{$m->m_ma}} data-toggle="modal" data-target="#edit">Edit</button>
-                        /
-                        <button class="btn btn-danger" data-catid={{$m->m_ma}} data-toggle="modal" data-target="#delete">Delete</button>
+                        <button class="btn btn-info" data-mytitle="{{$m->m_ten}}" data-mydescription="{{$m->m_trangthai}}" data-catid={{$m->m_ma}} data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i> Edit</button>
+                        
+                        <button class="btn btn-danger" data-catid={{$m->m_ma}} data-toggle="modal" data-target="#delete"><i class="fa fa-trash"></i> Delete</button>
                     </td>
                 </tr>
                 @endforeach
