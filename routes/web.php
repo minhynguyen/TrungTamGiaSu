@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 
 Route::get('/index', function () {
-    return view('index');
+    return view('TrangChu.index');
 });
 
 
@@ -33,14 +33,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix'=>'admin'], function(){	
 		Route::resource('TrinhDo', 'TrinhDoDayController');
-		
-
+		Route::resource('Mon','MonController');
+		Route::resource('LinhVuc','LinhVucController');
+		Route::resource('ChuyenNganh','ChuyenNganhController');
 });
 
 
 
 
-Route::resource('Mon','MonController');
-
-
-Route::resource('LinhVuc','LinhVucController');

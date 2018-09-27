@@ -24,14 +24,16 @@
         <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li> -->
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Chủ Đề</span>
+          <a href="#"><i class="fa fa-gears"></i> <span>Quản Lý Danh Mục</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="">Danh Sách Các Chủ Đề</a></li>
-            <li><a href="">Thêm Mới Chủ Đề</a></li>
+            <li><a href="{{route('LinhVuc.index')}}">Lĩnh Vực</a></li>
+            <li><a href="{{route('ChuyenNganh.index')}}">Chuyên Ngành</a></li>
+            <li><a href="{{route('Mon.index')}}">Môn</a></li>
+            <li><a href="{{route('TrinhDo.index')}}">Trình Độ</a></li>
           </ul>
         </li>
         <li class="treeview">
