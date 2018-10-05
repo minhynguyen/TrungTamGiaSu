@@ -9,8 +9,7 @@ class DangKi extends Model
     public    $timestamps   = false;
 
     protected $table        = 'dangki';
-    protected $fillable     = ['dk_hocphi', 'dk_taomoi'];
-    protected $guarded      = ['tdd_ma', 'gs_ma', 'm_ma'];
+    protected $fillable     = ['tdd_ma', 'gs_ma', 'm_ma','dk_hocphi', 'dk_taomoi'];
 
     protected $primaryKey   = ['tdd_ma', 'gs_ma', 'm_ma'];
     public    $incrementing = false;

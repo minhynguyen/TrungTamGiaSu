@@ -36,7 +36,7 @@
             <li><a href="{{route('TrinhDo.index')}}">Trình Độ</a></li>
           </ul>
         </li>
-        <li class="treeview">
+        <!-- <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Nhân Viên</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -46,8 +46,8 @@
             <li><a href="">Danh Sách Nhân Viên</a></li>
             <li><a href="">Thêm Mới Nhân Viên</a></li>
           </ul>
-        </li>
-        <li class="treeview">
+        </li> -->
+        <!-- <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>LOẠI</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -57,8 +57,8 @@
             <li><a href="">Danh Sách Các Loại</a></li>
             <li><a href="">Thêm Mới Loại</a></li>
           </ul>
-        </li>
-        <li class="treeview">
+        </li> -->
+        <!-- <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>SP</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -69,7 +69,7 @@
             <li><a href="">Thêm Mới SP</a></li>
           </ul>
           
-        </li>
+        </li> -->
       </ul>
       <!-- /.sidebar-menu -->
     </section>

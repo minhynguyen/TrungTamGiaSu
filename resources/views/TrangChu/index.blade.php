@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Cooking School Free html template</title>
+        <title>Trung Tâm Gia Sư</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -15,23 +15,11 @@
         <link rel="stylesheet" href="{{ asset ('Theme/TrangChu/css/skills/style.css') }}">
         <link rel="stylesheet" href="{{ asset ('Theme/TrangChu/css/navmenu/styles.css') }}">
         <link rel="stylesheet" href="{{ asset ('Theme/TrangChu/css/portfolio.jquery.css') }}">
-        <link rel="stylesheet" href="{{ asset ('Theme/TrangChu/css/fonticons.css') }}">
-        <!-- <link rel="stylesheet" href="{{ asset ('Theme/TrangChu/style.css') }}"> -->
+        <link rel="stylesheet" href="{{ asset ('Theme/TrangChu/css/fonticons.css') }}"> 
         <link rel="stylesheet" href="{{ asset ('Theme/TrangChu/fonts/stylesheet.css') }}">
         <link rel="stylesheet" href="{{ asset ('Theme/TrangChu/css/font-awesome.min.css') }}">
         <link rel="stylesheet" href="{{ asset ('Theme/TrangChu/css/skills/progressbar.css') }}">
         <link rel="stylesheet" href="{{ asset ('Theme/TrangChu/css/bootstrap.min.css') }}">
-
-        <!-- <link rel="stylesheet" href="assets/css/skills/progressbar.css"> -->
-        <!-- <link rel="stylesheet" href="assets/css/skills/style.css"> -->
-        <!-- <link rel="stylesheet" href="assets/css/navmenu/styles.css"> -->
-        <!-- <link rel="stylesheet" href="assets/css/portfolio.jquery.css"> -->
-        <!-- <link rel="stylesheet" href="assets/css/fonticons.css"> -->
-        <!-- <link rel="stylesheet" href="assets/style.css"> -->
-        <!-- <link rel="stylesheet" href="assets/fonts/stylesheet.css"> -->
-        <!-- <link rel="stylesheet" href="assets/css/font-awesome.min.css"> -->
-        <!-- <link rel="stylesheet" href="assets/css/bootstrap.min.css"> -->
-        <!--        <link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">-->
 
 
         <!--For Plugins external css-->
@@ -42,18 +30,6 @@
         <link rel="stylesheet" href="{{ asset ('Theme/TrangChu/css/responsive.css') }}">
         <link rel="stylesheet" href="{{ asset ('Theme/TrangChu/css/teamslide.css') }}">
         <script src="{{ asset ('theme/TrangChu/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js') }}"></script>
-
-
-        <!-- <link rel="stylesheet" href="assets/css/teamslide.css" /> -->
-        <!-- <link rel="stylesheet" href="assets/css/plugins.css" /> -->
-
-        <!--Theme custom css -->
-        <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
-
-        <!--Theme Responsive css-->
-        <!-- <link rel="stylesheet" href="assets/css/responsive.css" /> -->
-
-        <!-- <script src="assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script> -->
     </head>
     <body data-spy="scroll" data-target=".navbar-collapse">
     <style type="text/css">
@@ -184,6 +160,33 @@
                                             <li><a href="#team">Blog</a></li>
                                             <li><a href="#gellary">Gallery</a></li>
                                             <li><a href="#contact">Contact</a></li>
+                                            <!-- <li><a data-toggle="modal" href='#modal-id'>Đăng Nhập</a></li> -->
+                                            @guest
+                                                <li class="nav-item">
+                                                    <a data-toggle="modal" href='#modal-id'>Đăng Nhập</a>
+                                                </li>
+                                                <!-- <li class="nav-item">
+                                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                                </li> -->
+                                            @else
+                                                <li class="nav-item dropdown">
+                                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                                        {{ Auth::user()->name }} <span class="caret"></span>
+                                                    </a>
+
+                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                                           onclick="event.preventDefault();
+                                                                         document.getElementById('logout-form').submit();">
+                                                            {{ __('Logout') }}
+                                                        </a>
+
+                                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                            @csrf
+                                                        </form>
+                                                    </div>
+                                                </li>
+                                            @endguest
                                         </ul>
                                     </div>
 
@@ -214,7 +217,7 @@
 
                                         <div class="home_btn">
                                             <!-- <a href="" class="btn btn-primary">LEARN MORE</a> -->
-                                            <a class="btn btn-primary" data-toggle="modal" href='#modal-id'>Trigger modal</a>
+                                            <!-- <a class="btn btn-primary" data-toggle="modal" href='#modal-id'>Trigger modal</a> -->
                                         </div>
 
                                     </div>
@@ -258,29 +261,28 @@
                     <div class="service_border_raund text-center"></div>
                     <div class="main_service_area sections text-center">
                         <div class="head_title text-center">
-                            <h2>what we do?</h2>
+                            <h2>Bạn Đang Cần ???</h2>
                             <div class="separator"></div>
 
                         </div>
                         <div class="col-sm-4">
                             <div class="single_service">
                                 <div class="single_service_icon">
-                                    <img src="{{asset ('Theme/TrangChu/images/service.png')}}" alt="" />
+                                    <img src="{{asset ('Theme/TrangChu/images/Teachers-icon.png')}}" alt="" />
                                 </div>
 
-                                <h3>HAMBURGERS</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur convallis nunc, at ullamcorper turpis gravida nec. 
-                                    Praesent eu ultrices nunc.</p>
+                                <h3>Đăng Kí Làm Gia Sư</h3>
+                                 <a href="{{ route('dangkigs') }}" target="_blank"><button type="button" class="btn btn-info"><i class="fa fa-plus"></i> Đăng Kí Ngay</button></a>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="single_service">
                                 <div class="single_service_icon">
                                      <!-- <img src="assets/images/service2.png" alt="" /> -->
-                                     <img src="{{asset ('Theme/TrangChu/images/service2.png')}}" alt="" />
+                                     <img src="{{asset ('Theme/TrangChu/images/City-Students-icon.png')}}" alt="" />
                                 </div>
 
-                                <h3>muffins</h3>
+                                <h3>Đăng Kí Tìm Gia Sư</h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur convallis nunc, at ullamcorper turpis gravida nec. 
                                     Praesent eu ultrices nunc.</p>
                             </div>
@@ -288,11 +290,11 @@
                         <div class="col-sm-4">
                             <div class="single_service">
                                 <div class="single_service_icon">
-                                    <img src="{{asset ('Theme/TrangChu/images/service3.png')}}" alt="" />
+                                    <img src="{{asset ('Theme/TrangChu/images/nhanlop.jpg')}}" alt="" />
                                     <!-- <img src="assets/images/service3.png" alt="" /> -->
                                 </div>
 
-                                <h3>salt and pepper</h3>
+                                <h3>Hướng Dẫn Nhận Lớp</h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur convallis nunc, at ullamcorper turpis gravida nec. 
                                     Praesent eu ultrices nunc.</p>
                             </div>
@@ -304,54 +306,7 @@
         </section>
 
 
-        <section id="video" class="video">
-            <div class="home-overlay">
-                <div class="container">
-                    <div class="row">
-                        <div class="main_video_area sections text-center">
-                            <div class="head_title">  
-                                <i class="fa fa-film"></i>
-                                <h4>CHECK OUR VIDEO TUTORIALS</h4>
-                            </div>
-                            <div class="main_video_content">
-                                <div class="col-sm-4">
-                                    <div class="single_video">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/_l6CQRHIGyg"></iframe>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="single_video">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/_l6CQRHIGyg"></iframe>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="single_video">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/_l6CQRHIGyg"></iframe>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="portfolio_btn_area">
-                                <a href="" class="btn btn-larg">CHECK OUR CHANNEL</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-
-
-
-
-
+        
         <section id="about" class="about">
             <div class="container">
                 <div class="row">
@@ -853,14 +808,14 @@
             </div>
         </section>
 
-        <section id="map" class="map">  
+        <!-- <section id="map" class="map">  
             <div class="ourmaps">
                 <div class="container">
 
 
                 </div>
             </div>
-        </section>
+        </section> -->
 
 
 
@@ -945,19 +900,38 @@
                             <div class="shape7"></div>
                             <div class="float">
 
-                                <form class="form" action="" >
-                                    <h5 style="margin-left: 30px; color: #0073c7"><i class="fa fa-graduation-cap"></i> Đăng Nhập</h5>
+                                <!-- <form class="form" action="" > -->
+                                    <!-- <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}" class="form">
+                                        @csrf -->
+                                    <form  method="POST" action="{{ route('login') }}">
+                                        {{ csrf_field() }}
+                                        <div class="form"> 
+                                    <h4 style="margin-left: -5px; color: #0073c7"><i class="fa fa-graduation-cap"></i> Đăng Nhập</h4>
                                     <div class="form-group" style="margin-top: -10px">
                                         <label for="username" class="text-white">Email:</label>
-                                        <input type="text" name="username" id="username" class="form-control1">
+                                        <!-- <input type="text" name="username" id="username" class="form-control1"> -->
+                                        <input id="email" type="email" class="form-control1{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+
+                                        @if ($errors->has('email'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                     <div class="form-group" style="margin-top: -10px">
                                         <label for="password" class="text-white">Password:</label>
-                                        <input type="text" name="password" id="password" class="form-control1">
+                                        <input id="password" type="password" class="form-control1{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+
+                                        @if ($errors->has('password'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('password') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                     <div class="form-group">
-                                        <button type="button" class="btn btn-info btn-sm" data-dismiss="modal"><i class="fa fa-sign-in"></i> Đăng Nhập</button> 
-                                        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-sign-out"></i> Đóng</button>
+                                        <button  class="btn btn-info btn-sm"><i class="fa fa-sign-in"></i> Đăng Nhập</button> 
+                                        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-sign-out"></i> </button>
+                                    </div>
                                     </div>
                                 </form>
 
@@ -1032,17 +1006,31 @@
         <!--This is link only for gmaps-->
         <!-- <script src="http://maps.google.com/maps/api/js"></script> -->
         <!-- <script src="assets/js/gmaps.min.js"></script> -->
-        <script>
+        <!-- <script>
             var map = new GMaps({
                 el: '.ourmaps',
                 scrollwheel: false,
                 lat: -12.043333,
                 lng: -77.028333
             });
-        </script>
+        </script> -->
 
         <script src="{{ asset ('theme/TrangChu/js/plugins.js') }}"></script>
         <script src="{{ asset ('theme/TrangChu/js/main.js') }}"></script>
+        <!-- <script>
+          $(document).ready(function(){
+            $(".dropdown").hover(            
+                function() {
+                    $('.dropdown-menu', this).not('.in .dropdown-menu').stop( true, true ).slideDown("fast");
+                    $(this).toggleClass('open');        
+                },
+                function() {
+                    $('.dropdown-menu', this).not('.in .dropdown-menu').stop( true, true ).slideUp("fast");
+                    $(this).toggleClass('open');       
+                }
+            );
+        });
+        </script> -->
         <!-- <script src="assets/js/plugins.js"></script> -->
         <!-- <script src="assets/js/main.js"></script> -->
 

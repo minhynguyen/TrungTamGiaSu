@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\GiaSu;
 use Illuminate\Http\Request;
+use App\GiaSu;
 use Auth;
 use App\ChuyenNganh;
 use App\Mon;
@@ -12,7 +12,7 @@ use App\GiaSu_ChuyenNganh;
 use DB;
 
 
-class GiaSuController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,13 +22,14 @@ class GiaSuController extends Controller
     public function index()
     {
         $id = Auth::user()->id;
-        $thongtin = DB::table('GiaSu')->join('users', 'GiaSu.id', '=', 'users.id')
-                                      ->join('GiaSu_ChuyenNganh', 'GiaSu.gs_ma', '=', 'GiaSu_ChuyenNganh.gs_ma')
-                                      ->join('DangKi', 'DangKi.gs_ma', '=', 'DangKi.gs_ma')
-                                      ->join('Mon', 'DangKi.m_ma', '=', 'm.m_ma')
+        $thongtin = DB::table('GiaSu')->leftjoin('users', 'GiaSu.id', '=', 'users.id')
+                                      ->leftjoin('GiaSu_ChuyenNganh', 'GiaSu.gs_ma', '=', 'GiaSu_ChuyenNganh.gs_ma')
+                                      ->leftjoin('ChuyenNganh', 'ChuyenNganh.cn_ma', '=', 'GiaSu_ChuyenNganh.cn_ma')
+                                      ->leftjoin('DangKi', 'DangKi.gs_ma', '=', 'DangKi.gs_ma')
+                                      ->leftjoin('Mon', 'DangKi.m_ma', '=', 'Mon.m_ma')
+                                      ->leftjoin('TrinhDoDay', 'TrinhDoDay.tdd_ma', '=', 'DangKi.tdd_ma')
                                       ->where('users.id',$id)
                                       ->where('gs_trangthai','2')->get();
-
         return view('TrangChu.quanlitaikhoan')->with('thongtin', $thongtin);
     }
 
@@ -56,10 +57,10 @@ class GiaSuController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\GiaSu  $giaSu
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(GiaSu $giaSu)
+    public function show($id)
     {
         //
     }
@@ -67,10 +68,10 @@ class GiaSuController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\GiaSu  $giaSu
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(GiaSu $giaSu)
+    public function edit($id)
     {
         //
     }
@@ -79,10 +80,10 @@ class GiaSuController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\GiaSu  $giaSu
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, GiaSu $giaSu)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -90,10 +91,10 @@ class GiaSuController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\GiaSu  $giaSu
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(GiaSu $giaSu)
+    public function destroy($id)
     {
         //
     }
