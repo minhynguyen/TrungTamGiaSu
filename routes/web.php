@@ -11,17 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return  view('TrangChu.index');
-});
-Route::get('/qltk', function () {
-    return  view('TrangChu.quanlitaikhoan');
-});
+// Route::get('/', function () {
+//     return  view('TrangChu.index');
+// });
+// // Route::get('/qltk', function () {
+// //     return  view('TrangChu.quanlitaikhoan');
+// // });
 
 
-Route::get('/index', function () {
-    return view('TrangChu.index');
-});
+// Route::get('/index', function () {
+//     return view('TrangChu.index');
+// });
 // Route::get('/dangki', function () {
 //     return view('TrangChu.dangkigs');
 // })->name('dangkigs');
@@ -31,13 +31,18 @@ Route::get('/test', function () {
     return view('backend/chude/index');
 });
 
-Route::get('/register1', 'Auth\RegisterController@getRegister')->name('dangkigs');;
+Route::get('/register1', 'Auth\RegisterController@getRegister')->name('dangkigs');
+Route::get('/register2', 'Auth\RegisterController@getRegister')->name('dangkiph');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('Profile', 'ProfileController');
+Route::resource('YeuCau', 'YeuCauController');
+Route::resource('/', 'TrangChuController');
+Route::get('Profile', 'ProfileController@index')->name('Profilegs');
+Route::get('Profileph', 'ProfileController@getttphuhuynh')->name('Profileph');
+Route::get('/index', 'TrangChuController@index');
 
 Route::group(['prefix'=>'admin'], function(){	
 		Route::resource('TrinhDo', 'TrinhDoDayController');

@@ -21,7 +21,7 @@ class TrinhDoDayController extends Controller
     public function index()
     {
         $dsTrinhDo = TrinhDoDay::all();
-        return view('backend.TrinhDo.index')->with('dsTrinhDo',$dsTrinhDo);
+        return view('TrangChu.index')->with('dsTrinhDo',$dsTrinhDo);
     }
 
     /**

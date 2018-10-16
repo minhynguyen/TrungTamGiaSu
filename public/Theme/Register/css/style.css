@@ -70,7 +70,7 @@ h1 span {
     letter-spacing: 7px;
 }
 /*-- reservation --*/
-.book-form input[type="text"], .book-form input[type="email"], select#country, select#country1, input#datepicker, .book-form input[type="password"] {
+.book-form input[type="text"], .book-form input[type="email"], select.country, select.country1, input#datepicker, .book-form input[type="password"] {
     width: 86.8%!important;
     color: #fff;
     font-size: 0.9em;
@@ -90,10 +90,10 @@ h1 span {
 .phone_email1 {
     float: right;
 }
-select#country,select#country1{
+select.country,select.country1{
     width: 100%!important;
 }
-select#country option, select#country1 option {
+select.country option, select.country1 option {
 	background:#000;
 }
 .book-form .form-text,.book_date,.section_room {
@@ -110,7 +110,7 @@ select#country option, select#country1 option {
     text-align: center;
     border-right: 1px solid rgba(255, 255, 255, 0.47);
 }
-.book-form input[type="submit"] {
+.book-form input[type="submit"], input[type="button"]  {
     text-transform: capitalize;
     background: rgba(16, 67, 163, 0.13);
     color: #ffffff;
@@ -129,7 +129,7 @@ select#country option, select#country1 option {
     transition: .5s all;
     cursor: pointer;
 }
-.book-form input[type="submit"]:hover {
+.book-form input[type="submit"]:hover, input[type="button"]:hover {
     background: #ea2e3e;
     border-color: #ea2e3e;
     color: #fff;
@@ -220,7 +220,7 @@ select#country option, select#country1 option {
 	.book-form input[type="text"], .book-form input[type="email"], input#datepicker, .book-form input[type="password"] {
 		width: 84.8%!important;
 	}
-	.book-form input[type="submit"] {
+	.book-form input[type="submit"], input[type="button"] {
 		margin-top: 1em;
 	}
 }
@@ -381,7 +381,7 @@ select#country option, select#country1 option {
 	.book-form input[type="text"], .book-form input[type="email"], input#datepicker, .book-form input[type="password"] {
 		width: 87.7%!important;
 	}
-	.book-form input[type="text"], .book-form input[type="email"], select#country, select#country1, input#datepicker, .book-form input[type="password"] {
+	.book-form input[type="text"], .book-form input[type="email"], select.country, select.country1, input#datepicker, .book-form input[type="password"] {
 		font-size: 13.5px;
 	}
 	.copy.w3ls {

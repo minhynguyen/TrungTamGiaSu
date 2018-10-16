@@ -470,7 +470,9 @@ input::-ms-input-placeholder {
 
 .main_menu_bg{
     margin-top: 0px;
-    background-color: transparent;
+    /*background-color: transparent;*/
+    height: 80px;
+    background-color: rgba(88, 88, 88, 0.55);
 }
 .main_menu_bg .navbar-default {
     background-color: transparent; 

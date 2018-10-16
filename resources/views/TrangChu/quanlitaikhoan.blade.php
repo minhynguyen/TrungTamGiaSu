@@ -507,16 +507,20 @@ div.user-menu div.user-menu-content:not(.active){
                     </div>
                     
             </div>
+             @endforeach
+
             <div class="user-menu-content">
                 <h3>
                     Thông Tin Đăng Kí
                 </h3>
+                @foreach ($thongtindangki as $ttdk)
                     <div class="col-md-6">
-                        <h5> <i class="fa fa-paper-plane-o coral"></i> {{$tt->m_ten}}</h5>
+                        <h5> <i class="fa fa-paper-plane-o coral"></i> {{$ttdk->m_ten}}</h5>
                     </div>
                     <div class="col-md-6">
-                        <h5> <i class="fa fa-paper-plane-o coral"></i> {{$tt->tdd_ten}}</h5>
+                        <h5> <i class="fa fa-paper-plane-o coral"></i> {{$ttdk->tdd_ten}}</h5>
                     </div>
+                @endforeach
             </div>
             <div class="user-menu-content">
                 <h3>
@@ -577,8 +581,7 @@ div.user-menu div.user-menu-content:not(.active){
             </div>
         </div>
     </div>
-    @endforeach
-
+   
         
         <div class="head_title text-center">
                             <h2>THÔNG TIN TÀI KHOẢN</h2>

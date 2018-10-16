@@ -55,9 +55,13 @@ class RegisterController extends Controller
        $trinhdo = DB::table('TrinhDoDay')->where('tdd_trangthai','2')->get();
         return view('TrangChu.dangkigs')->with('mon',$mon)
                                         ->with('trinhdo',$trinhdo)
-                                        ->with('chuyennganh',$chuyennganh);;
+                                        ->with('chuyennganh',$chuyennganh);
     }
 
+
+    protected function getRegisterph() {
+        return view('TrangChu.dangkiph');
+    }
 
     /**
      * Get a validator for an incoming registration request.
@@ -87,6 +91,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'loai' => $data['loaitk'],
         ]);
         $userId = $user->id;
         if($data['loaitk'] === '1'){
@@ -143,9 +148,9 @@ class RegisterController extends Controller
 
         }else{
             $phuhuynh = PhuHuynh::create([
-                'ph_ten' => $data['gs_ten'],
-                'ph_sdt' => $data['gs_sdt'],
-                'ph_diachi' => $data['gs_cmnd'],
+                'ph_ten' => $data['ph_ten'],
+                'ph_sdt' => $data['ph_sdt'],
+                'ph_diachi' => $data['ph_diachi'],
                 'ph_taomoi' => Carbon::now(),
                 'ph_capnhat' => Carbon::now(),
                 'id' => $userId ,

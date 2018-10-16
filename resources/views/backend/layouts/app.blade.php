@@ -58,7 +58,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <!-- The user image in the navbar-->
               <img src="{{ asset ('Theme/admin/dist/img/user1-128x128.jpg') }}" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs">{{ Auth::user()->name }}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -66,7 +66,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <img src="{{ asset ('Theme/admin/dist/img/user1-128x128.jpg') }}" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
+                  {{ Auth::user()->name }}
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
