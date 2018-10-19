@@ -44,6 +44,7 @@ Route::get('Profile', 'ProfileController@index')->name('Profilegs');
 Route::get('Profileph', 'ProfileController@getttphuhuynh')->name('Profileph');
 Route::get('/index', 'TrangChuController@index');
 
+Route::resource('xemdangki', 'DangKiController');
 Route::group(['prefix'=>'admin'], function(){	
 		Route::resource('TrinhDo', 'TrinhDoDayController');
 		Route::resource('Mon','MonController');

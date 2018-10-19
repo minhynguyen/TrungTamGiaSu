@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\DangKi;
 use Illuminate\Http\Request;
+use App\TrinhDoDay;
+use App\Mon;
+use DB;
+
 
 class DangKiController extends Controller
 {
@@ -44,9 +48,14 @@ class DangKiController extends Controller
      * @param  \App\DangKi  $dangKi
      * @return \Illuminate\Http\Response
      */
-    public function show(DangKi $dangKi)
+    public function show($id)
     {
-        //
+        $thongtindangki = DB::table('dangki')->join('giasu', 'giasu.gs_ma', '=', 'dangki.gs_ma')
+                                             ->join('users', 'users.id', '=', 'giasu.id')
+                                             ->join('mon', 'mon.m_ma', '=', 'dangki.m_ma')
+                                             ->join('trinhdoday', 'trinhdoday.tdd_ma', '=', 'dangki.tdd_ma')
+                                             ->where('dk_ma', $id)->get();
+        return view('TrangChu.thongtintimlop')->with('thongtindangki',$thongtindangki);   
     }
 
     /**

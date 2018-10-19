@@ -11,8 +11,9 @@ class DangKi extends Model
     protected $table        = 'dangki';
     protected $fillable     = ['tdd_ma', 'gs_ma', 'm_ma','dk_hocphi', 'dk_taomoi'];
 
-    protected $primaryKey   = ['tdd_ma', 'gs_ma', 'm_ma'];
-    public    $incrementing = false;
+    protected $primaryKey   = ['dk_ma'];
+
+    protected $guarded      = ['dk_ma'];
 
 
     protected $dates        = ['dk_taomoi'];
